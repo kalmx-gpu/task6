@@ -113,7 +113,7 @@ $allLanguages = $pdo->query("SELECT id, name FROM programming_languages ORDER BY
         .btn-delete { background: #ef4444; }
         .btn-edit { background: #f59e0b; }
         .btn-cancel { background: #6b7280; }
-        .edit-form { background: white; padding: 30px; border-radius: 16px; margin-top: 30px; border-top: 4px solid #3b82f6; }
+        .edit-form { background: white; padding: 30px; border-radius: 16px; margin-top: 20px; margin-bottom: 30px; border-top: 4px solid #3b82f6; }
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
         .stat-card { background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; padding: 20px; border-radius: 12px; text-align: center; }
         .stat-count { font-size: 2rem; font-weight: bold; }
@@ -129,42 +129,6 @@ $allLanguages = $pdo->query("SELECT id, name FROM programming_languages ORDER BY
         <?php if ($message): ?>
             <div class="<?= $msgType === 'success' ? 'success-message' : 'error-message' ?>"><?= htmlspecialchars($message) ?></div>
         <?php endif; ?>
-
-        <h2>Заявки пользователей</h2>
-        <?php if (empty($applications)): ?>
-            <p style="text-align:center; padding:40px 0;">Заявок пока нет</p>
-        <?php else: ?>
-            <table class="admin-table">
-                <thead>
-                <tr><th>ID</th><th>ФИО</th><th>Email</th><th>Дата рождения</th><th>Языки</th><th>Действия</th></tr>
-                </thead>
-                <tbody>
-                <?php foreach ($applications as $app): ?>
-                    <tr>
-                        <td><?= $app['id'] ?></td>
-                        <td><?= htmlspecialchars($app['full_name']) ?></td>
-                        <td><?= htmlspecialchars($app['email']) ?></td>
-                        <td><?= htmlspecialchars($app['birth_date']) ?></td>
-                        <td><?= htmlspecialchars(implode(', ', $app['languages'] ?: ['Не выбрано'])) ?></td>
-                        <td>
-                            <a href="?edit=<?= $app['id'] ?>" class="btn-action btn-edit">Изменить</a>
-                            <a href="?action=delete&id=<?= $app['id'] ?>" class="btn-action btn-delete" onclick="return confirm('Удалить заявку?')">Удалить</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-
-        <h2>Статистика по языкам</h2>
-        <div class="stats-grid">
-            <?php foreach ($stats as $stat): ?>
-                <div class="stat-card">
-                    <div><?= htmlspecialchars($stat['name']) ?></div>
-                    <div class="stat-count"><?= $stat['user_count'] ?></div>
-                </div>
-            <?php endforeach; ?>
-        </div>
 
         <?php if ($editingId && $editData): ?>
         <div class="edit-form">
@@ -227,6 +191,42 @@ $allLanguages = $pdo->query("SELECT id, name FROM programming_languages ORDER BY
             </form>
         </div>
         <?php endif; ?>
+
+        <h2>Заявки пользователей</h2>
+        <?php if (empty($applications)): ?>
+            <p style="text-align:center; padding:40px 0;">Заявок пока нет</p>
+        <?php else: ?>
+            <table class="admin-table">
+                <thead>
+                <tr><th>ID</th><th>ФИО</th><th>Email</th><th>Дата рождения</th><th>Языки</th><th>Действия</th></tr>
+                </thead>
+                <tbody>
+                <?php foreach ($applications as $app): ?>
+                    <tr>
+                        <td><?= $app['id'] ?></td>
+                        <td><?= htmlspecialchars($app['full_name']) ?></td>
+                        <td><?= htmlspecialchars($app['email']) ?></td>
+                        <td><?= htmlspecialchars($app['birth_date']) ?></td>
+                        <td><?= htmlspecialchars(implode(', ', $app['languages'] ?: ['Не выбрано'])) ?></td>
+                        <td>
+                            <a href="?edit=<?= $app['id'] ?>" class="btn-action btn-edit">Изменить</a>
+                            <a href="?action=delete&id=<?= $app['id'] ?>" class="btn-action btn-delete" onclick="return confirm('Удалить заявку?')">Удалить</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+
+        <h2>Статистика по языкам</h2>
+        <div class="stats-grid">
+            <?php foreach ($stats as $stat): ?>
+                <div class="stat-card">
+                    <div><?= htmlspecialchars($stat['name']) ?></div>
+                    <div class="stat-count"><?= $stat['user_count'] ?></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 </body>
